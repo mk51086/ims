@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://127.0.0.1:40019/ims_db
+    url: jdbc:postgresql://127.0.0.1:40019/postgres
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
