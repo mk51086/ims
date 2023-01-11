@@ -1,4 +1,4 @@
-package com.ims.entity.Request.User;
+package com.ims.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class LoginRequest {
+public class SignUpRequest {
     private String email;
+    private String firstName;
+    private String lastName;
     private String password;
+    private String confirmPassword;
+    private String address;
 }

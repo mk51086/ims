@@ -3,22 +3,36 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://127.0.0.1:40019/postgres
+    url: jdbc:postgresql://127.0.0.1:40019/ims
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres
 
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
-    show-sql: false
-    hibernate:
-      ddl-auto: update
-  devtools:
-    restart:
-      enabled: true
-    livereload:
-      enabled: true
+    show-sql: true
+    generate-ddl: true
+    properties:
+      javax:
+        persistence:
+          schema-generation:
+            database:
+              action: create
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+        generate_statistics: false
+        jdbc:
+          fetch_size: 2000
+          lob.non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update
+        hbm2dll:
+          create_namespaces: true
+        default_schema: ims
 
 jwt:
   secret: jwtsecret

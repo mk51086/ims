@@ -1,4 +1,4 @@
-package com.ims.entity.Response;
+package com.ims.dto;
 
 import lombok.*;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class BasicResponse {
+public class TokenContainingResponse {
     private HttpStatus httpStatus;
     private String message;
+    private String token;
 }

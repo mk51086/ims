@@ -1,9 +1,9 @@
 package com.ims.service.impl;
 
 import com.ims.entity.CustomUserDetails;
-import com.ims.entity.Request.User.LoginRequest;
-import com.ims.entity.Request.User.SignUpRequest;
-import com.ims.entity.Response.User.UserInfo;
+import com.ims.dto.LoginRequest;
+import com.ims.dto.SignUpRequest;
+import com.ims.dto.UserInfo;
 import com.ims.entity.User;
 import com.ims.exception.EmptyValueExistException;
 import com.ims.exception.User.LoginFailException;
@@ -11,7 +11,6 @@ import com.ims.exception.User.PasswordNotMatchException;
 import com.ims.exception.User.UserAlreadyExistException;
 import com.ims.exception.User.UserNotExistException;
 import com.ims.repository.UserRepository;
-import com.ims.service.IUserService;
 import com.ims.util.JwtUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,7 +24,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class UserService implements IUserService {
+public class UserServiceImpl implements com.ims.service.UserService {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;

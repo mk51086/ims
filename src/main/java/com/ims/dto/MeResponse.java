@@ -1,4 +1,4 @@
-package com.ims.entity.Response.User;
+package com.ims.dto;
 
 import lombok.*;
 import org.springframework.http.HttpStatus;
