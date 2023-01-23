@@ -18,17 +18,14 @@ public class SupplierServiceImpl implements SupplierService {
     public Supplier addSupplier(Supplier supplier) {
         return supplierRepository.save(supplier);
     }
-
     @Override
     public Supplier updateSupplier(Supplier supplier) {
         return supplierRepository.save(supplier);
     }
-
     @Override
     public void deleteSupplier(int id) {
         supplierRepository.deleteById(id);
     }
-
     @Override
     public List<Supplier> getSuppliers() {
         return supplierRepository.findAll();

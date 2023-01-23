@@ -19,7 +19,6 @@ public class SupplierController {
     public Supplier addSupplier (@RequestBody Supplier supplier){
         return supplierService.addSupplier(supplier);
     }
-
     @PutMapping
     public Supplier updateSupplier (@RequestBody Supplier supplier){
         return supplierService.updateSupplier(supplier);
