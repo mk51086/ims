@@ -20,7 +20,13 @@ public class InventoryItem {
     private int quantity;
 
     @ManyToOne
+    @JoinColumn(name="category_id")
     private Category category;
+
+    @ManyToOne
+    @JoinColumn(name="order_id")
+    private Order order;
+
     private float purchasePrice;
     private LocalDateTime expirationDate;
 

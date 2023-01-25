@@ -21,6 +21,11 @@ public class User {
     private String password;
     private String address;
 
+/* kur t fillojm me punu me role, mos te hupum funksionalitetin e signup login
+    @ManyToOne
+    @JoinColumn(name="role_id")
+    private Role role;
+*/
     public User(
             String email,
             String firstName,
