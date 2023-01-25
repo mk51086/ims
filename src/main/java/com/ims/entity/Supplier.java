@@ -20,4 +20,9 @@ public class Supplier {
     private String email;
     private String address;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name="order_id")
+    private Order order;
+
 }
