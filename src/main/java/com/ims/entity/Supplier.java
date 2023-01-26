@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,8 +22,7 @@ public class Supplier {
     private String address;
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name="order_id")
-    private Order order;
+    @OneToMany(mappedBy = "supplier")
+    private List<Order> orders;
 
 }

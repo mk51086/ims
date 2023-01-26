@@ -11,5 +11,9 @@ public interface InventoryItemService {
     void deleteItem(int id);
     List<InventoryItem> getItems();
     InventoryItem getItemById(int id);
-    List<InventoryItem> getItemsByCategory(Category category);
+    List<InventoryItem> findByCategoryId(int categoryId);
+
+    List<InventoryItem> getLowStockItems();
+    InventoryItem restock (int id, int quantity);
+    List<InventoryItem> getOutOfStockItems();
 }
