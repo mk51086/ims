@@ -39,4 +39,14 @@ public class InventoryItemController {
     public InventoryItem getItemById(@PathVariable int id) {
         return inventoryItemService.getItemById(id);
     }
+
+    @GetMapping("/{categoryId}")
+    public List<InventoryItem> getItemsByCategoryId (@PathVariable int categoryId){
+        return inventoryItemService.findByCategoryId(categoryId);
+    }
+    @GetMapping("/lowStockItems")
+    public List<InventoryItem> listOfLowStockItems
+            (){
+        return inventoryItemService.getLowStockItems();
+    }
 }

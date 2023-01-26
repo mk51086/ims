@@ -1,12 +1,10 @@
 package com.ims.service.impl;
 
-import com.ims.entity.Category;
 import com.ims.entity.InventoryItem;
 import com.ims.repository.InventoryItemRepository;
 import com.ims.service.InventoryItemService;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 @Service
 public class InventoryItemServiceImpl implements InventoryItemService {
@@ -42,8 +40,21 @@ public class InventoryItemServiceImpl implements InventoryItemService {
     }
 
     @Override
-    public List<InventoryItem> getItemsByCategory(Category category) {
-        return inventoryItemRepository.getInventoryItemByCategory(category.getCategory_id());
+    public List<InventoryItem> findByCategoryId(int categoryId) {
+        return inventoryItemRepository.findByCategoryId(categoryId);
+    }
+    @Override
+    public List<InventoryItem> getLowStockItems() {
+        return inventoryItemRepository.getLowStockItems();
+    }
+    @Override
+    public InventoryItem restock(int id, int quantity) {
+        return null;
+    }
+
+    @Override
+    public List<InventoryItem> getOutOfStockItems() {
+        return null;
     }
 
 }

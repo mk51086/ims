@@ -28,7 +28,8 @@ public class Order {
     @OneToMany   (mappedBy = "order")
     private List<InventoryItem> inventoryItems;
 
-    @OneToMany(mappedBy = "order")
-    private List<Supplier> suppliers;
+    @ManyToOne
+    @JoinColumn(name="supplier_id")
+    private Supplier supplier;
 
 }
