@@ -3,7 +3,7 @@ package com.ims.filter;
 import com.ims.constant.Util;
 import com.ims.entity.CustomUserDetails;
 import com.ims.exception.User.UserNotExistException;
-import com.ims.service.CustomUserDetailsService;
+import com.ims.service.impl.CustomUserDetailsServiceImpl;
 import com.ims.util.JwtUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +23,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private JwtUtil jwtUtil;
-    private CustomUserDetailsService customUserDetailsService;
+    private CustomUserDetailsServiceImpl customUserDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException, UserNotExistException {

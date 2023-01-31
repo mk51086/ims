@@ -1,4 +1,4 @@
-package com.ims.service;
+package com.ims.service.impl;
 
 import com.ims.entity.CustomUserDetails;
 import com.ims.entity.User;
@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
