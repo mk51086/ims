@@ -1,5 +1,6 @@
 package com.ims.dto;
 
+import com.ims.enums.UserStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,4 +15,5 @@ public class SignUpRequest {
     private String password;
     private String confirmPassword;
     private String address;
+    private UserStatus status;
 }

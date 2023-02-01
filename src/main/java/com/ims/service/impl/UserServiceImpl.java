@@ -5,11 +5,9 @@ import com.ims.dto.LoginRequest;
 import com.ims.dto.SignUpRequest;
 import com.ims.dto.UserInfo;
 import com.ims.entity.User;
+import com.ims.enums.UserStatus;
 import com.ims.exception.EmptyValueExistException;
-import com.ims.exception.User.LoginFailException;
-import com.ims.exception.User.PasswordNotMatchException;
-import com.ims.exception.User.UserAlreadyExistException;
-import com.ims.exception.User.UserNotExistException;
+import com.ims.exception.User.*;
 import com.ims.repository.UserRepository;
 import com.ims.util.JwtUtil;
 import lombok.AllArgsConstructor;
@@ -17,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +37,7 @@ public class UserServiceImpl implements com.ims.service.UserService {
         String firstName = Optional.ofNullable(signUpRequest.getFirstName()).orElseThrow(EmptyValueExistException::new);
         String lastName = Optional.ofNullable(signUpRequest.getLastName()).orElseThrow(EmptyValueExistException::new);
         String address = Optional.ofNullable(signUpRequest.getAddress()).orElseThrow(EmptyValueExistException::new);
+        UserStatus status = Optional.ofNullable(signUpRequest.getStatus()).orElseThrow(EmptyValueExistException::new);
 
         boolean alreadyExist = userRepository.existsByEmail(email);
 
@@ -55,7 +55,8 @@ public class UserServiceImpl implements com.ims.service.UserService {
                 firstName,
                 lastName,
                 encodedPassword,
-                address
+                address,
+                status = UserStatus.InActive
         );
         userRepository.save(newUser);
     }
@@ -70,6 +71,11 @@ public class UserServiceImpl implements com.ims.service.UserService {
             throw new UserNotExistException();
         }
 
+        User userData = user.get();
+        if(userData.getStatus() != UserStatus.Active){
+            throw new UserNotActivated();
+        }
+        
         try{
             authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -114,5 +120,12 @@ public class UserServiceImpl implements com.ims.service.UserService {
         );
 
         return userInfo;
+    }
+
+    @Override
+    public void changeUserStatus(Long userId,UserStatus status) {
+        User user = userRepository.findById(userId).orElseThrow(() ->new UsernameNotFoundException("User not found with Id"+ userId));
+        user.setStatus(status);
+        userRepository.save(user);
     }
 }

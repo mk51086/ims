@@ -8,6 +8,7 @@ import com.ims.dto.BasicResponse;
 import com.ims.dto.TokenContainingResponse;
 import com.ims.dto.MeResponse;
 import com.ims.dto.UserInfo;
+import com.ims.enums.UserStatus;
 import com.ims.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,4 +45,10 @@ public class UserController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @PutMapping("/{userId}/status")
+    public ResponseEntity<Void> changeUserStatus(@PathVariable Long userId, @RequestParam UserStatus status){
+        this.userService.changeUserStatus(userId,status);
+        return ResponseEntity.ok().build();
+    }
+
 }
