@@ -19,7 +19,7 @@ public class CategoryController {
     @PutMapping
     public Category updateCategory (@RequestBody Category category){return categorySerivce.updateCategory(category);}
     @DeleteMapping("/{id}")
-    public void deleteSupplier (@PathVariable int id){ categorySerivce.deleteCategory(id);}
+    public void deleteCategory (@PathVariable int id){ categorySerivce.deleteCategory(id);}
     public List<Category> getCategories(){return categorySerivce.getCategories();}
     @GetMapping("/{id}")
     public  Category getCategoryById(@PathVariable int id){return categorySerivce.getCategoryById(id);}

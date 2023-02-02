@@ -73,7 +73,7 @@ public class UserServiceImpl implements com.ims.service.UserService {
 
         User userData = user.get();
         if(userData.getStatus() != UserStatus.Active){
-            throw new UserNotActivated();
+            throw new UserNotActivatedExecption();
         }
         
         try{

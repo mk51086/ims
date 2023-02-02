@@ -45,7 +45,7 @@ public class InventoryItemServiceImpl implements InventoryItemService {
     }
     @Override
     public List<InventoryItem> getLowStockItems() {
-        return inventoryItemRepository.getLowStockItems();
+        return inventoryItemRepository.findByQuantityLessThan(5);
     }
     @Override
     public InventoryItem restock(int id, int quantity) {

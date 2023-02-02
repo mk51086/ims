@@ -24,7 +24,6 @@ public class Order {
     private String description;
     private OrderStatus status;
     private LocalDateTime date;
-
     @OneToMany   (mappedBy = "order")
     private List<InventoryItem> inventoryItems;
 
