@@ -6,9 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.text.DateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -29,6 +27,6 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name="supplier_id")
-    private Supplier supplier;
+    private Company supplier;
 
 }

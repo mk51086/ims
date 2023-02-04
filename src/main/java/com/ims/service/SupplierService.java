@@ -1,15 +1,14 @@
 package com.ims.service;
 
-import com.ims.entity.InventoryItem;
-import com.ims.entity.Supplier;
-import org.hibernate.criterion.Order;
+import com.ims.dto.CompanyDTO;
+import com.ims.entity.Company;
 
 import java.util.List;
 
 public interface SupplierService {
-    Supplier addSupplier(Supplier supplier);
-    Supplier updateSupplier(Supplier supplier);
+    CompanyDTO addSupplier(CompanyDTO supplier);
+    CompanyDTO updateSupplier(CompanyDTO supplier);
     void deleteSupplier(int id);
-    List<Supplier> getSuppliers();
-    Supplier getSupplierById(int id);
+    List<CompanyDTO> getSuppliers();
+    CompanyDTO getSupplierById(int id);
 }
