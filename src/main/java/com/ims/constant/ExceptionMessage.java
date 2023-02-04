@@ -12,5 +12,6 @@ public class ExceptionMessage {
     public static final String INVALID_REQUEST_ERROR_MESSAGE = "Invalid request.";
     public static final String INTERNAL_SERVER_ERROR_MESSAGE = "Unexpected internal server error.";
     public static final String COMPANY_NOT_FOUND_MESSAGE = "COMPANY DOES NOT EXIST.";
+    public static final String UNAUTHORIZED_ERROR_MESSAGE = "UNAUTHORIZED.";
 
 }
