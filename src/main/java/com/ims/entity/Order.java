@@ -22,6 +22,7 @@ public class Order {
     private String description;
     private OrderStatus status;
     private LocalDateTime date;
+    private Integer quantity;
     @OneToMany   (mappedBy = "order")
     private List<InventoryItem> inventoryItems;
 

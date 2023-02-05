@@ -5,9 +5,11 @@ import com.ims.entity.Sale;
 import com.ims.repository.OrderRepository;
 import com.ims.repository.SaleRepository;
 import com.ims.service.ReportService;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,10 +31,16 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public List<Order> listOfOrdersByDate(LocalDateTime startTime, LocalDateTime endTime) {
-        //TODO: implementation of this method where we return orders between a date range
-        return null;
+       List<Order> result = new ArrayList<>();
+       List<Order> orders = orderRepository.findAll();
+       for (Order order: orders){
+          // Hibernate.initialize(order.getInventoryItems());
+            if(order.getDate().isAfter(startTime) && order.getDate().isBefore(endTime)){
+                result.add(order);
+            }
+       }
+       return result;
     }
-
     @Override
     public List<Order> listOrders() {
         return orderRepository.findAll();
