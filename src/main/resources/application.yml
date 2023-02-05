@@ -1,9 +1,9 @@
 server:
-  port: 8080
+  port: 8091
 
 spring:
   datasource:
-    url: jdbc:postgresql://127.0.0.1:40019/ims
+    url: jdbc:postgresql://127.0.0.1:40019/postgres
     driver-class-name: org.postgresql.Driver
     username: postgres
     password: postgres

@@ -3,6 +3,7 @@ package com.ims.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,9 +11,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 @Entity
-@Table(name = "supplier_table", schema = "ims")
-public class Supplier {
+@Table(name = "company_table", schema = "ims")
+public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -22,7 +24,11 @@ public class Supplier {
     private String address;
     private String description;
 
-    @OneToMany(mappedBy = "supplier")
+    @OneToMany(mappedBy = "id")
     private List<Order> orders;
+
+    private boolean isSupplier;
+
+    private boolean isCustomer;
 
 }

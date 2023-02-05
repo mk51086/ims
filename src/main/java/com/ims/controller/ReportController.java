@@ -1,10 +1,13 @@
 package com.ims.controller;
 
+import com.ims.dto.OrderDTO;
 import com.ims.entity.Order;
 import com.ims.entity.Sale;
 import com.ims.service.ReportService;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,15 +27,22 @@ public class ReportController {
     public List<Sale> getAllSales() {
         return reportService.getAllSales();
     }
-
+    //getAllSalesbyDay, getAllSalesByMonth, Year*.
     @GetMapping("/orders")
     public List<Order> listOrders() {
         return reportService.listOrders();
     }
 
-    @GetMapping("/{startDate}/{endDate}")
-    public List<Order> listOfOrdersByDate(@PathVariable("startDate") LocalDateTime startDate,
-                                          @PathVariable("endDate") LocalDateTime endDate) {
-        return reportService.listOfOrdersByDate(startDate, endDate);
+    @GetMapping("/listOrdersByDate")
+    public List<OrderDTO> listOfOrdersByDate(@RequestParam("startDate") String startDate,
+                                          @RequestParam("endDate") String endDate) {
+        LocalDateTime start = LocalDateTime.parse(startDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        LocalDateTime end = LocalDateTime.parse(endDate, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        List<Order> orders = reportService.listOfOrdersByDate(start, end);
+        List<OrderDTO> orderDTOs = new ArrayList<>();
+        for (Order order : orders) {
+            orderDTOs.add(new OrderDTO(order));
+        }
+        return orderDTOs;
     }
 }

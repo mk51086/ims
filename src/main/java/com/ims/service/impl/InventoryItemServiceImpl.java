@@ -41,7 +41,7 @@ public class InventoryItemServiceImpl implements InventoryItemService {
 
     @Override
     public List<InventoryItem> findByCategoryId(int categoryId) {
-        return inventoryItemRepository.findByCategoryId(categoryId);
+        return inventoryItemRepository.findInventoryItemByCategory(categoryId);
     }
     @Override
     public List<InventoryItem> getLowStockItems() {
