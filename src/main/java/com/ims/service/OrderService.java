@@ -1,7 +1,7 @@
 package com.ims.service;
 
 import com.ims.dto.OrderDTO;
-import com.ims.entity.Order;
+import com.ims.entity.InventoryItem;
 import com.ims.enums.OrderStatus;
 
 import java.util.List;

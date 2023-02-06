@@ -23,7 +23,7 @@ public class Order {
     private OrderStatus status;
     private LocalDateTime date;
     private Integer quantity;
-    @OneToMany   (mappedBy = "order")
+    @OneToMany   (fetch = FetchType.EAGER,mappedBy = "order")
     private List<InventoryItem> inventoryItems;
 
     @ManyToOne
