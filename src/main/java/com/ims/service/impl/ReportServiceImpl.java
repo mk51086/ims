@@ -30,6 +30,21 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public List<Sale> listOfSalesByDay() {
+        return saleRepository.findByDay();
+    }
+
+    @Override
+    public List<Sale> listOfSalesByMonth() {
+        return saleRepository.findByMonth();
+    }
+
+    @Override
+    public List<Sale> listOfSalesByYear() {
+        return saleRepository.findByYear();
+    }
+
+    @Override
     public List<Order> listOfOrdersByDate(LocalDateTime startTime, LocalDateTime endTime) {
        List<Order> result = new ArrayList<>();
        List<Order> orders = orderRepository.findAll();

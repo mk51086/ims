@@ -43,8 +43,8 @@ public class OrderController {
     }
 
     @PutMapping("/{orderId}/status")
-    public ResponseEntity<Void> changeOrderStatus(@PathVariable Integer orderId, @RequestParam OrderStatus orderStatus){
-        orderService.changeOrderStatus(orderId,orderStatus);
+    public ResponseEntity<Void> changeOrderStatus(@PathVariable Integer orderId, @RequestParam OrderStatus status){
+        orderService.changeOrderStatus(orderId,status);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

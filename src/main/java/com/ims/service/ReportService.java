@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface ReportService {
     List<Sale> getAllSales();
+    List<Sale> listOfSalesByDay();
+    List<Sale> listOfSalesByMonth();
+    List<Sale> listOfSalesByYear();
     List<Order> listOfOrdersByDate(LocalDateTime startTime, LocalDateTime endTime);
     List<Order> listOrders();
 }

@@ -27,8 +27,20 @@ public class ReportController {
     public List<Sale> getAllSales() {
         return reportService.getAllSales();
     }
-    //getAllSalesbyDay, getAllSalesByMonth, Year*.
-    @GetMapping("/orders")
+
+    @GetMapping("/listOfSalesByDay")
+    public List<Sale> listOfSalesByDay(){
+        return reportService.listOfSalesByDay();
+    }
+    @GetMapping("/listOfSalesByMonth")
+    public List<Sale> listOfSalesByMonth(){
+        return reportService.listOfSalesByMonth();
+    }
+    @GetMapping("/listOfSalesByYear")
+    public List<Sale> listOfSalesByYear(){
+        return reportService.listOfSalesByYear();
+    }
+    @GetMapping("/listOrders")
     public List<Order> listOrders() {
         return reportService.listOrders();
     }

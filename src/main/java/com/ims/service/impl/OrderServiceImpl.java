@@ -50,7 +50,6 @@ public class OrderServiceImpl implements OrderService {
         order.setInventoryItems(items);
         Company supplier = companyRepository.findById(orderDTO.getSupplierId()).orElse(null);
         order.setSupplier(supplier);
-        order.setStatus(OrderStatus.PROGRESS);
         orderRepository.save(order);
         return new OrderDTO(order);
     }
@@ -80,19 +79,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void changeOrderStatus(Integer orderId, OrderStatus orderStatus) {
+    public void changeOrderStatus(Integer orderId, OrderStatus status) {
         Order order = orderRepository.findById(orderId).orElseThrow(null);
         if (order == null) {
             throw new IllegalArgumentException("Order not found");
         }
-        if (orderStatus == OrderStatus.COMPLETED) {
+        if (status == OrderStatus.COMPLETED) {
             List<InventoryItem> inventoryItems = order.getInventoryItems();
             for (InventoryItem item : inventoryItems) {
                 item.setQuantity(item.getQuantity() + order.getQuantity());
                 inventoryItemRepository.save(item);
             }
         }
-        order.setStatus(orderStatus);
+        order.setStatus(status);
         orderRepository.save(order);
     }
 
