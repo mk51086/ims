@@ -1,16 +1,17 @@
 package com.ims.service.impl;
 
+import com.ims.dto.SaleDTO;
 import com.ims.entity.Order;
 import com.ims.entity.Sale;
 import com.ims.repository.OrderRepository;
 import com.ims.repository.SaleRepository;
 import com.ims.service.ReportService;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -30,18 +31,21 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<Sale> listOfSalesByDay() {
-        return saleRepository.findByDay();
+    public List<SaleDTO> listOfSalesByDay() {
+        List<Sale> sales = saleRepository.findByDay();
+        return sales.stream().map(sale -> new SaleDTO(sale)).collect(Collectors.toList());
     }
 
     @Override
-    public List<Sale> listOfSalesByMonth() {
-        return saleRepository.findByMonth();
+    public List<SaleDTO> listOfSalesByMonth() {
+        List<Sale> sales = saleRepository.findByMonth();
+        return sales.stream().map(sale -> new SaleDTO(sale)).collect(Collectors.toList());
     }
 
     @Override
-    public List<Sale> listOfSalesByYear() {
-        return saleRepository.findByYear();
+    public List<SaleDTO> listOfSalesByYear() {
+        List<Sale> sales = saleRepository.findByYear();
+        return  sales.stream().map(sale -> new SaleDTO(sale)).collect(Collectors.toList());
     }
 
     @Override
@@ -49,7 +53,6 @@ public class ReportServiceImpl implements ReportService {
        List<Order> result = new ArrayList<>();
        List<Order> orders = orderRepository.findAll();
        for (Order order: orders){
-          // Hibernate.initialize(order.getInventoryItems());
             if(order.getDate().isAfter(startTime) && order.getDate().isBefore(endTime)){
                 result.add(order);
             }

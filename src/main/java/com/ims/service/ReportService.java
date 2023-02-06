@@ -1,5 +1,5 @@
 package com.ims.service;
-import com.ims.entity.InventoryItem;
+import com.ims.dto.SaleDTO;
 import com.ims.entity.Order;
 import com.ims.entity.Sale;
 
@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface ReportService {
     List<Sale> getAllSales();
-    List<Sale> listOfSalesByDay();
-    List<Sale> listOfSalesByMonth();
-    List<Sale> listOfSalesByYear();
+    List<SaleDTO> listOfSalesByDay();
+    List<SaleDTO> listOfSalesByMonth();
+    List<SaleDTO> listOfSalesByYear();
     List<Order> listOfOrdersByDate(LocalDateTime startTime, LocalDateTime endTime);
     List<Order> listOrders();
 }

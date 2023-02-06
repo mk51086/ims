@@ -1,6 +1,7 @@
 package com.ims.controller;
 
 import com.ims.dto.OrderDTO;
+import com.ims.dto.SaleDTO;
 import com.ims.entity.Order;
 import com.ims.entity.Sale;
 import com.ims.service.ReportService;
@@ -29,15 +30,15 @@ public class ReportController {
     }
 
     @GetMapping("/listOfSalesByDay")
-    public List<Sale> listOfSalesByDay(){
+    public List<SaleDTO> listOfSalesByDay(){
         return reportService.listOfSalesByDay();
     }
     @GetMapping("/listOfSalesByMonth")
-    public List<Sale> listOfSalesByMonth(){
+    public List<SaleDTO> listOfSalesByMonth(){
         return reportService.listOfSalesByMonth();
     }
     @GetMapping("/listOfSalesByYear")
-    public List<Sale> listOfSalesByYear(){
+    public List<SaleDTO> listOfSalesByYear(){
         return reportService.listOfSalesByYear();
     }
     @GetMapping("/listOrders")
