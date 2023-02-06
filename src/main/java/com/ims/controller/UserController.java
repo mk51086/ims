@@ -7,20 +7,26 @@ import com.ims.dto.SignUpRequest;
 import com.ims.dto.BasicResponse;
 import com.ims.dto.TokenContainingResponse;
 import com.ims.dto.MeResponse;
-import com.ims.dto.UserInfo;
+import com.ims.dto.UserDTO;
 import com.ims.enums.UserStatus;
 import com.ims.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
+@Api( tags = "User")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<TokenContainingResponse> login(@RequestBody LoginRequest loginRequest) throws Exception {
@@ -40,7 +46,7 @@ public class UserController {
 
     @PostMapping("/me")
     public ResponseEntity<MeResponse> me(@RequestHeader(value = Util.AUTHORIZATION) String token){
-        UserInfo user = userService.me(token);
+        UserDTO user = userService.me(token);
         MeResponse response = new MeResponse(HttpStatus.OK, Controller.LOG_IN_SUCCESS_MESSAGE, user);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -49,6 +55,16 @@ public class UserController {
     public ResponseEntity<Void> changeUserStatus(@PathVariable Long userId, @RequestParam UserStatus status){
         this.userService.changeUserStatus(userId,status);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/list")
+    public List<UserDTO> getUsers(){
+        return userService.getUsers();
+    }
+
+    @GetMapping("/{userId}")
+    public UserDTO getUserById(@PathVariable Long userId){
+        return userService.getUserById(userId);
     }
 
 }
