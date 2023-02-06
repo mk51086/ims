@@ -3,7 +3,7 @@ package com.ims.service.impl;
 import com.ims.entity.CustomUserDetails;
 import com.ims.dto.LoginRequest;
 import com.ims.dto.SignUpRequest;
-import com.ims.dto.UserInfo;
+import com.ims.dto.UserDTO;
 import com.ims.entity.User;
 import com.ims.enums.UserStatus;
 import com.ims.exception.EmptyValueExistException;
@@ -11,6 +11,8 @@ import com.ims.exception.User.*;
 import com.ims.repository.UserRepository;
 import com.ims.util.JwtUtil;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,12 +21,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
 @Service
 public class UserServiceImpl implements com.ims.service.UserService {
-
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
@@ -56,8 +60,9 @@ public class UserServiceImpl implements com.ims.service.UserService {
                 lastName,
                 encodedPassword,
                 address,
-                status = UserStatus.InActive
+                UserStatus.InActive
         );
+        logger.info("Created User " + newUser);
         userRepository.save(newUser);
     }
 
@@ -89,7 +94,7 @@ public class UserServiceImpl implements com.ims.service.UserService {
         return jwtUtil.generateToken(email);
     }
 
-    public UserInfo me(String token) {
+    public UserDTO me(String token) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
 
@@ -103,7 +108,7 @@ public class UserServiceImpl implements com.ims.service.UserService {
             throw new UserNotExistException();
         }
 
-        UserInfo userInfo = null;
+        UserDTO userInfo;
 
         Optional<User> user = userRepository.findByEmail(email);
 
@@ -111,12 +116,49 @@ public class UserServiceImpl implements com.ims.service.UserService {
             throw new UserNotExistException();
         }
 
-        userInfo = new UserInfo(
+        userInfo = new UserDTO(
                 user.get().getUserId(),
                 user.get().getEmail(),
                 user.get().getFirstName(),
                 user.get().getLastName(),
-                user.get().getAddress()
+                user.get().getAddress(),
+                user.get().getStatus()
+        );
+
+        return userInfo;
+    }
+
+    @Override
+    public List<UserDTO> getUsers() {
+        List<User> users = userRepository.findAll();
+
+        if(users.isEmpty()){
+            throw new UserNotExistException();
+        }
+        List<UserDTO> userDTOS = new ArrayList<>();
+        for (User user : users) {
+            userDTOS.add(new UserDTO(user.getUserId(), user.getEmail(), user.getFirstName(),user.getLastName(),user.getAddress(),user.getStatus()));
+        }
+        return userDTOS;
+    }
+
+    @Override
+    public UserDTO getUserById(Long id) {
+        UserDTO userInfo;
+
+        Optional<User> user = userRepository.findById(id);
+
+        if(user.isEmpty()){
+            throw new UserNotExistException();
+        }
+
+        userInfo = new UserDTO(
+                user.get().getUserId(),
+                user.get().getEmail(),
+                user.get().getFirstName(),
+                user.get().getLastName(),
+                user.get().getAddress(),
+                user.get().getStatus()
         );
 
         return userInfo;
