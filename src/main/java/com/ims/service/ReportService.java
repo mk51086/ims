@@ -13,4 +13,5 @@ public interface ReportService {
     List<SaleDTO> listOfSalesByYear();
     List<Order> listOfOrdersByDate(LocalDateTime startTime, LocalDateTime endTime);
     List<Order> listOrders();
+    void generatePdf(List<SaleDTO> sales, String fileName);
 }

@@ -13,6 +13,10 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.io.IOUtils;
 
 @RestController
 @RequestMapping("/report")
@@ -28,7 +32,6 @@ public class ReportController {
     public List<Sale> getAllSales() {
         return reportService.getAllSales();
     }
-
     @GetMapping("/listOfSalesByDay")
     public List<SaleDTO> listOfSalesByDay(){
         return reportService.listOfSalesByDay();
@@ -57,5 +60,57 @@ public class ReportController {
             orderDTOs.add(new OrderDTO(order));
         }
         return orderDTOs;
+    }
+
+    @GetMapping("/pdf/listOfSalesByDay")
+    public void pdfListOfSalesByDay(HttpServletResponse response){
+        List<SaleDTO> sales = reportService.listOfSalesByDay();
+        reportService.generatePdf(sales,"sales_by_day.pdf");
+
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment;filename=sales_by_day.pdf");
+
+        try {
+            InputStream is = new FileInputStream("sales_by_day.pdf");
+            response.setContentLength(is.available());
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @GetMapping("/pdf/listOfSalesByMonth")
+    public void pdfListOfSalesByMonth(HttpServletResponse response){
+        List<SaleDTO> sales = reportService.listOfSalesByMonth();
+        reportService.generatePdf(sales,"sales_by_month.pdf");
+
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment;filename=sales_by_month.pdf");
+
+        try {
+            InputStream is = new FileInputStream("sales_by_month.pdf");
+            response.setContentLength(is.available());
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @GetMapping("/pdf/listOfSalesByYear")
+    public void pdfListOfSalesByYear(HttpServletResponse response){
+        List<SaleDTO> sales = reportService.listOfSalesByYear();
+        reportService.generatePdf(sales,"sales_by_year.pdf");
+
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment;filename=sales_by_year.pdf");
+
+        try {
+            InputStream is = new FileInputStream("sales_by_month.pdf");
+            response.setContentLength(is.available());
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
