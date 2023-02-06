@@ -1,10 +1,10 @@
 package com.ims.service;
 
+import com.ims.dto.SaleDTO;
 import com.ims.entity.InventoryItem;
-import com.ims.entity.Sale;
 public interface SaleService {
-        void addSale(Sale sale);
+        void addSale(SaleDTO sale);
         void generateInvoice(InventoryItem[] items);
-        void modifySale(int id, Sale sale);
+        void modifySale(int id, SaleDTO sale);
         void removeSale(int id);
 }

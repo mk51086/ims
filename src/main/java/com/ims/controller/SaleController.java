@@ -1,12 +1,15 @@
 package com.ims.controller;
 
+import com.ims.dto.SaleDTO;
 import com.ims.entity.InventoryItem;
 import com.ims.entity.Sale;
 import com.ims.service.SaleService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/sale")
+@Api( tags = "Sale")
 public class SaleController {
 
     private final SaleService saleService;
@@ -16,7 +19,7 @@ public class SaleController {
     }
 
     @PostMapping
-    public void addSale(@RequestBody Sale sale) {
+    public void addSale(@RequestBody SaleDTO sale) {
         saleService.addSale(sale);
     }
 
@@ -26,7 +29,7 @@ public class SaleController {
     }
 
     @PutMapping("/{id}")
-    public void modifySale(@PathVariable int id, @RequestBody Sale sale) {
+    public void modifySale(@PathVariable int id, @RequestBody SaleDTO sale) {
         saleService.modifySale(id, sale);
     }
 
