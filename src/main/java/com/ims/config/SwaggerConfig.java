@@ -4,16 +4,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.ims.constant.ExceptionMessage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RequestMethod;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.builders.ResponseMessageBuilder;
-import springfox.documentation.service.ApiKey;
-import springfox.documentation.service.ResponseMessage;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -23,31 +20,33 @@ public class SwaggerConfig {
 
     @Bean
     public Docket api() {
-        List<ResponseMessage> responseMessages = Arrays.asList(
-                new ResponseMessageBuilder()
-                        .code(400)
-                        .message(ExceptionMessage.INVALID_REQUEST_ERROR_MESSAGE)
-                        .build(),
-                new ResponseMessageBuilder()
-                        .code(500)
-                        .message(ExceptionMessage.INTERNAL_SERVER_ERROR_MESSAGE)
-                        .build()
-        );
-
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.ims.controller"))
                 .paths(PathSelectors.any())
                 .build()
+                .apiInfo(apiInfo())
                 .pathMapping("/")
-                .securitySchemes(Collections.singletonList(apiKey()))
-                .useDefaultResponseMessages(false)
-                .globalResponseMessage(RequestMethod.GET, responseMessages)
-                .globalResponseMessage(RequestMethod.POST, responseMessages)
-                .globalResponseMessage(RequestMethod.PUT, responseMessages);
+                .securityContexts(Collections.singletonList(securityContext()))
+                .securitySchemes(Collections.singletonList(apiKey()));
     }
 
     private ApiKey apiKey() {
-        return new ApiKey("jwt", "Authorization", "header");
+        return new ApiKey("JWT", "Authorization", "header");
     }
+    private SecurityContext securityContext() {
+        return SecurityContext.builder().securityReferences(defaultAuth()).build();
+    }
+
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return List.of(new SecurityReference("JWT", authorizationScopes));
+    }
+    private ApiInfo apiInfo() {
+        return new ApiInfo("ims", "IMS API Docs", "0.1","", new Contact("IMS", "https://sun.com", "ims@ims.com"),
+                "Apache License Version 2.0", "https://www.apache.org/licenses/LICENSE-2.0", Collections.emptyList());
+    }
+
 }

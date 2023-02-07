@@ -22,7 +22,8 @@ public class Order {
     private String description;
     private OrderStatus status;
     private LocalDateTime date;
-    @OneToMany   (mappedBy = "order")
+    private Integer quantity;
+    @OneToMany   (fetch = FetchType.EAGER,mappedBy = "order")
     private List<InventoryItem> inventoryItems;
 
     @ManyToOne

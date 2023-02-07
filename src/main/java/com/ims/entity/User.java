@@ -23,7 +23,7 @@ public class User {
     private String address;
     private UserStatus status;
 
-/* kur t fillojm me punu me role, mos te hupum funksionalitetin e signup login
+/* TODO: Add roles
     @ManyToOne
     @JoinColumn(name="role_id")
     private Role role;

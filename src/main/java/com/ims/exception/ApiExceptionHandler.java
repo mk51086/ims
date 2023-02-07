@@ -93,7 +93,7 @@ public class ApiExceptionHandler {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
 
         ApiException apiException = new ApiException(
-                ExceptionMessage.LOG_IN_FAIL_MESSAGE,
+                ExceptionMessage.COMPANY_NOT_FOUND_MESSAGE,
                 httpStatus,
                 ZonedDateTime.now(ZoneId.of("Z"))
         );

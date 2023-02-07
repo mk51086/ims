@@ -11,5 +11,5 @@ import org.springframework.http.HttpStatus;
 public class MeResponse {
     private HttpStatus httpStatus;
     private String message;
-    private UserInfo userInfo;
+    private UserDTO userInfo;
 }
