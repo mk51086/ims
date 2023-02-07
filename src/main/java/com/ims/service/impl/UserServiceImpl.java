@@ -56,7 +56,8 @@ public class UserServiceImpl implements com.ims.service.UserService {
                 lastName,
                 encodedPassword,
                 address,
-                status = UserStatus.InActive
+                status
+//                status = UserStatus.InActive
         );
         userRepository.save(newUser);
     }

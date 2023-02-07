@@ -14,10 +14,6 @@ configurations {
 	}
 }
 
-repositories {
-	mavenCentral()
-}
-
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
@@ -34,9 +30,13 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
 	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
-
+	implementation 'com.sendgrid:sendgrid-java:4.9.3'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+repositories {
+	mavenCentral()
 }
