@@ -76,7 +76,7 @@ public class ReportServiceImpl implements ReportService {
             PdfWriter.getInstance(document, new FileOutputStream(fileName));
             document.open();
 
-            Table table = new Table(5);
+            Table table = new Table(4);
 
             Cell cell1 = new Cell();
             cell1.add(new Paragraph("Date"));
