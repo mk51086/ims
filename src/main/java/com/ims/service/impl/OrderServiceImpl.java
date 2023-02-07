@@ -9,6 +9,7 @@ import com.ims.repository.InventoryItemRepository;
 import com.ims.repository.OrderRepository;
 import com.ims.repository.CompanyRepository;
 import com.ims.service.OrderService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -30,11 +31,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDTO addOrder(OrderDTO orderDTO) {
         Order order = new Order();
-        BeanUtils.copyProperties(orderDTO,order);
-        Company supplier = companyRepository.findById(orderDTO.getSupplierId()).orElse(null);
-        order.setSupplier(supplier);
-        orderRepository.save(order);
-        return new OrderDTO(order);
+        return getOrderDTO(orderDTO, order);
     }
 
     @Override
@@ -43,9 +40,16 @@ public class OrderServiceImpl implements OrderService {
         if(order == null){
             throw new ResourceNotFoundException("Order not found with id" + id);
         }
-        BeanUtils.copyProperties(orderDTO,order);
-        Company supplier = companyRepository.findById(orderDTO.getSupplierId()).orElse(null);
+        return getOrderDTO(orderDTO, order);
+    }
 
+    @NotNull
+    private OrderDTO getOrderDTO(OrderDTO orderDTO, Order order) {
+        BeanUtils.copyProperties(orderDTO,order);
+        List<InventoryItem> items = inventoryItemRepository.findAllById(orderDTO.getInventoryItems());
+        order.setInventoryItems(items);
+        Company supplier = companyRepository.findById(orderDTO.getSupplierId()).orElse(null);
+        order.setSupplier(supplier);
         orderRepository.save(order);
         return new OrderDTO(order);
     }
@@ -77,13 +81,18 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void changeOrderStatus(Integer orderId, OrderStatus status) {
         Order order = orderRepository.findById(orderId).orElseThrow(null);
-        if (status == OrderStatus.Completed) {
-            for (InventoryItem item : order.getInventoryItems()) {
-                 /*   item.setQuantity(item.getQuantity() + item.getOrder().getQuantity());
-                    inventoryItemRepository.save(item);*/
+        if (order == null) {
+            throw new IllegalArgumentException("Order not found");
+        }
+        if (status == OrderStatus.COMPLETED) {
+            List<InventoryItem> inventoryItems = order.getInventoryItems();
+            for (InventoryItem item : inventoryItems) {
+                item.setQuantity(item.getQuantity() + order.getQuantity());
+                inventoryItemRepository.save(item);
             }
         }
         order.setStatus(status);
         orderRepository.save(order);
     }
+
 }

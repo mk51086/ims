@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 public class OrderDTO {
@@ -17,6 +19,7 @@ public class OrderDTO {
     private LocalDateTime date;
     private Integer quantity;
     private Integer supplierId;
+    private List<Integer> inventoryItems;
 
     public OrderDTO(Order order){
         BeanUtils.copyProperties(order, this);

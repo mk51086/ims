@@ -1,7 +1,7 @@
 package com.ims.controller;
 
 import com.ims.dto.OrderDTO;
-import com.ims.entity.Order;
+import com.ims.enums.OrderStatus;
 import com.ims.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,4 +42,9 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(order);
     }
 
+    @PutMapping("/{orderId}/status")
+    public ResponseEntity<Void> changeOrderStatus(@PathVariable Integer orderId, @RequestParam OrderStatus status){
+        orderService.changeOrderStatus(orderId,status);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
