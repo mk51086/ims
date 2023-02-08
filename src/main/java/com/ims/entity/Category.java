@@ -19,7 +19,7 @@ public class Category {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
     private List<InventoryItem> inventoryItems;
 
 }

@@ -1,5 +1,6 @@
 package com.ims.controller;
 
+import com.ims.dto.InventoryItemDTO;
 import com.ims.entity.InventoryItem;
 import com.ims.service.InventoryItemService;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,12 @@ public class InventoryItemController {
     }
 
     @PostMapping
-    public InventoryItem addItem(@RequestBody InventoryItem item) {
-        return inventoryItemService.addItem(item);
+    public InventoryItemDTO addItem(@RequestBody InventoryItemDTO inventoryItemDTO) {
+        return inventoryItemService.addItem(inventoryItemDTO);
     }
     @PutMapping
-    public InventoryItem updateItem(@RequestBody InventoryItem item) {
-        return inventoryItemService.updateItem(item);
+    public InventoryItemDTO updateItem(@RequestBody InventoryItemDTO inventoryItemDTO) {
+        return inventoryItemService.updateItem(inventoryItemDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -31,12 +32,12 @@ public class InventoryItemController {
     }
 
     @GetMapping
-    public List<InventoryItem> getItems() {
+    public List<InventoryItemDTO> getItems() {
         return inventoryItemService.getItems();
     }
 
     @GetMapping("/{id}")
-    public InventoryItem getItemById(@PathVariable int id) {
+    public InventoryItemDTO getItemById(@PathVariable int id) {
         return inventoryItemService.getItemById(id);
     }
 

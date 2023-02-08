@@ -1,16 +1,17 @@
 package com.ims.service;
 
+import com.ims.dto.InventoryItemDTO;
 import com.ims.entity.Category;
 import com.ims.entity.InventoryItem;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 public interface InventoryItemService {
-    InventoryItem addItem(InventoryItem item);
-    InventoryItem updateItem(InventoryItem item);
+    InventoryItemDTO addItem(InventoryItemDTO inventoryItemDTO);
+    InventoryItemDTO updateItem(InventoryItemDTO inventoryItemDTO);
     void deleteItem(int id);
-    List<InventoryItem> getItems();
-    InventoryItem getItemById(int id);
+    List<InventoryItemDTO> getItems();
+    InventoryItemDTO getItemById(int id);
     List<InventoryItem> findByCategoryId(int categoryId);
 
     List<InventoryItem> getLowStockItems();

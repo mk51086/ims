@@ -1,5 +1,6 @@
 package com.ims.service.impl;
 
+import com.ims.service.EmailService;
 import com.sendgrid.SendGrid;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class SendGridServiceImpl {
+public class EmailServiceImpl implements EmailService {
 
     @Value("${spring.sendgrid.api-key}")
     private String apiKey;
@@ -31,7 +32,11 @@ public class SendGridServiceImpl {
             request.setBody(email.build());
             Response response = sg.api(request);
 
-           return response.getBody();
+           if (response.getStatusCode() == 200) {
+               return "Email send successfully";
+           }
+
+            return response.getBody();
 
         } catch (IOException ex) {
             throw ex;
