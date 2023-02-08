@@ -1,12 +1,13 @@
 package com.ims.service.impl;
 
 import com.ims.dto.InventoryItemDTO;
+import com.ims.entity.Category;
 import com.ims.entity.InventoryItem;
 import com.ims.exception.company.CompanyNotFoundException;
+import com.ims.repository.CategoryRepository;
 import com.ims.repository.InventoryItemRepository;
 import com.ims.service.InventoryItemService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,14 +16,19 @@ import java.util.stream.Collectors;
 @Service
 public class InventoryItemServiceImpl implements InventoryItemService {
     private final InventoryItemRepository inventoryItemRepository;
+    private final CategoryRepository categoryRepository;
 
-    public InventoryItemServiceImpl(InventoryItemRepository inventoryItemRepository) {
+    public InventoryItemServiceImpl(InventoryItemRepository inventoryItemRepository,
+                                    CategoryRepository categoryRepository) {
         this.inventoryItemRepository = inventoryItemRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
     public InventoryItemDTO addItem(InventoryItemDTO inventoryItemDTO) {
         InventoryItem inventoryItem = dtoToEntity(inventoryItemDTO);
+        Category category = categoryRepository.findById(inventoryItemDTO.getCategoryId()).orElse(null);
+        inventoryItem.setCategory(category);
         InventoryItem savedInventoryItem = inventoryItemRepository.save(inventoryItem);
         return new InventoryItemDTO(savedInventoryItem);
     }
@@ -30,6 +36,8 @@ public class InventoryItemServiceImpl implements InventoryItemService {
     @Override
     public InventoryItemDTO updateItem(InventoryItemDTO inventoryItemDTO) {
         InventoryItem inventoryItem = dtoToEntity(inventoryItemDTO);
+        Category category = categoryRepository.findById(inventoryItemDTO.getCategoryId()).orElse(null);
+        inventoryItem.setCategory(category);
         InventoryItem savedInventoryItem = inventoryItemRepository.save(inventoryItem);
         return new InventoryItemDTO(savedInventoryItem);
     }
