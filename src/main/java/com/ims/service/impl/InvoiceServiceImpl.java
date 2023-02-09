@@ -36,6 +36,32 @@ public class InvoiceServiceImpl implements InvoiceService {
         return entityToModel(invoice);
     }
 
+    @Override
+    public InvoiceDTO generateOrderInvoice(InvoiceDTO invoiceDTO) {
+        Order order = orderRepository.findById(invoiceDTO.getOrderItem()).stream().findFirst().orElse(null);
+        Invoice invoice = Invoice.builder()
+                .total(invoiceDTO.getTotal())
+                .tax(invoiceDTO.getTax())
+                .orderItem(order)
+                .number(invoiceDTO.getNumber())
+                .build();
+        invoiceRepository.save(invoice);
+        return entityToModel(invoice);
+    }
+
+    @Override
+    public InvoiceDTO generateSaleInvoice(InvoiceDTO invoiceDTo) {
+        Sale sale = saleRepository.findById(invoiceDTo.getSaleItem()).stream().findFirst().orElse(null);
+        Invoice invoice = Invoice.builder()
+                .total(invoiceDTo.getTotal())
+                .tax(invoiceDTo.getTax())
+                .saleItem(sale)
+                .number(invoiceDTo.getNumber())
+                .build();
+        invoiceRepository.save(invoice);
+        return entityToModel(invoice);
+    }
+
     private Invoice toEntity(InvoiceDTO invoiceDTO) {
         Order order = orderRepository.findById(invoiceDTO.getOrderItem()).stream().findFirst().orElse(null);
         Sale sale = saleRepository.findById(invoiceDTO.getSaleItem()).stream().findFirst().orElse(null);
@@ -49,13 +75,23 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     private InvoiceDTO entityToModel(Invoice invoice) {
-        return InvoiceDTO
-                .builder()
-                .number(invoice.getNumber())
-                .orderItem(invoice.getOrderItem().getId())
-                .saleItem(invoice.getSaleItem().getId())
-                .tax(invoice.getTax())
-                .total(invoice.getTotal())
-                .build();
+        if (invoice.getSaleItem() != null) {
+            return InvoiceDTO
+                    .builder()
+                    .number(invoice.getNumber())
+                    .saleItem(invoice.getSaleItem().getId())
+                    .tax(invoice.getTax())
+                    .total(invoice.getTotal())
+                    .build();
+        } else {
+            return InvoiceDTO
+                    .builder()
+                    .number(invoice.getNumber())
+                    .orderItem(invoice.getOrderItem().getId())
+                    .tax(invoice.getTax())
+                    .total(invoice.getTotal())
+                    .build();
+        }
     }
+
 }

@@ -24,4 +24,10 @@ public class InvoiceController {
     @GetMapping("/order/{id}")
     public InvoiceDTO getInvoiceByOrder(@PathVariable int id){return invoiceService.getInvoiceByOrder(id);}
 
+    @PostMapping("")
+    public InvoiceDTO generateOrderInvoice(@RequestBody InvoiceDTO invoiceDTO){return invoiceService.generateOrderInvoice(invoiceDTO);}
+
+    @PostMapping("/sale")
+    public InvoiceDTO generateSaleInvoice(@RequestBody InvoiceDTO invoiceDTO){return invoiceService.generateSaleInvoice(invoiceDTO);}
+
 }
