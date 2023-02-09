@@ -2,12 +2,14 @@ package com.ims.controller;
 
 import com.ims.dto.CompanyDTO;
 import com.ims.service.CompanyService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/company")
+@Api( tags = "Company")
 public class CompanyController {
     private final CompanyService companyService;
 

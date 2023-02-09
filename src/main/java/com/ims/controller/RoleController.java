@@ -2,12 +2,14 @@ package com.ims.controller;
 
 import com.ims.entity.Role;
 import com.ims.service.RoleService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/role")
+@Api( tags = "Role")
 public class RoleController {
     private final RoleService roleService;
     public RoleController(RoleService roleService){

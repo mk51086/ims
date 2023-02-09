@@ -4,12 +4,14 @@ import com.ims.dto.InvoiceDTO;
 import com.ims.entity.Category;
 import com.ims.service.CategorySerivce;
 import com.ims.service.InvoiceService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/invoice")
+@Api( tags = "Invoice")
 public class InvoiceController {
     private final InvoiceService invoiceService;
 

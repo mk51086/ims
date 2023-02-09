@@ -3,6 +3,7 @@ package com.ims.controller;
 import com.ims.dto.OrderDTO;
 import com.ims.enums.OrderStatus;
 import com.ims.service.OrderService;
+import io.swagger.annotations.Api;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/order")
+@Api( tags = "Order")
 public class OrderController {
     private final OrderService orderService;
     public OrderController (OrderService orderService){

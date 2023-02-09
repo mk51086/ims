@@ -3,12 +3,14 @@ package com.ims.controller;
 import com.ims.dto.InventoryItemDTO;
 import com.ims.entity.InventoryItem;
 import com.ims.service.InventoryItemService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/inventory")
+@Api( tags = "Inventory")
 public class InventoryItemController {
 
     private final InventoryItemService inventoryItemService;

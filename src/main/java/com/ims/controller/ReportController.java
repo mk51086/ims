@@ -5,6 +5,7 @@ import com.ims.dto.SaleDTO;
 import com.ims.entity.Order;
 import com.ims.entity.Sale;
 import com.ims.service.ReportService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,6 +21,7 @@ import org.apache.commons.io.IOUtils;
 
 @RestController
 @RequestMapping("/report")
+@Api( tags = "Report")
 public class ReportController {
 
     private final ReportService reportService;

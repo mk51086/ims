@@ -2,12 +2,14 @@ package com.ims.controller;
 
 import com.ims.entity.Category;
 import com.ims.service.CategorySerivce;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/category")
+@Api( tags = "Category")
 public class CategoryController {
     private final CategorySerivce categorySerivce;
 
